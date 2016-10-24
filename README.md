@@ -80,3 +80,6 @@ Interpreter uses jQuery User Interface, a visual component JavaScript library.
   <Category id="motor" title="Motor"/>
 </SetOfNews>
 ```
+
+## 5. Installation
+Create a website and copy all files. The file "index.html" running **FeedPsi Web Application**. The file "api.html" is documentation the **FeedPsi Component**. 
