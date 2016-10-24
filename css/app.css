@@ -1,0 +1,78 @@
+﻿/*
+ * Application PsiRSS
+ * Aothor: Enrique Chaavrriaga. Copyrigth 2012.
+ ****************************************************************************/
+ 
+body { font-family: Arial,Helvetica,sans-serif; font-size: 90%; margin: 0; }
+
+.viewrss { margin: 0px 30px; }
+
+.viewrss-header{ width:100%; vertical-align:bottom; display:block; margin: 0; height: 60px; background-image: url(../images/top.png); background-repeat: no-repeat; }
+
+.viewrss-main { display:block; margin: 0; padding: 0; }
+.viewrss-error { padding: 10px; color: red; font-size: 1.2em; font-weight: bold; }
+
+
+.viewrss-menu { margin-top:5px; width:250px; vertical-align:top; }
+.viewrss-menu-title { margin-top: 5px; padding: 5px; text-align:center; }
+.viewrss-menu.custom-state-active { background: #eee; }
+
+.viewrss-menu-items { list-style-type: none; }
+.viewrss-menu-items li { margin-top: 5px; padding: 0.4em;  }
+.viewrss-menu-items li h5 { margin: 0 0 0.4em; font-size:0.9em; cursor: move; }
+.viewrss-menu-items li .news-content { cursor: move; width:100%; min-height:50px; text-align:center; vertical-align:middle; display:table-cell; }
+.viewrss-menu-items li a { float: right; }
+.viewrss-menu-items .logo { cursor: pointer; }
+.viewrss-menu-title span { float: right; display: inline-block; cursor: pointer; }
+
+
+.viewrss-menu-items .menu-item, .viewrss-menu-items .menu-item a { margin-top:5px; padding: 0px; background-color: #FAFCFE; text-decoration: none; color: #1D5987; cursor: pointer; }
+.viewrss-menu-items .menu-item:hover, .viewrss-menu-items .menu-item a:hover { background-color: #eaf5ff; border-bottom: 1px dotted #79B7E7;  border-top: 1px dotted #79B7E7; }
+.viewrss-menu-items .submenu { list-style-type: circle; padding-left: 20px; }
+.viewrss-menu-items .item-rss .header { padding: 5px; }
+.viewrss-menu-items .item-rss .header h5 { padding: 0; margin: 0; }
+.viewrss-menu-items .news-subtitle { cursor: pointer; }
+
+.viewrss-categories { width: 250px; vertical-align:top; padding: 0; margin: 0; }
+.viewrss-category-title { margin-bottom: 5px; padding: 5px; cursor: move; color: #1d5987; font-size:1em; }
+.viewrss-category-title span { float: right; display: inline-block; cursor: pointer; }
+.viewrss-view-news img { cursor: pointer; }
+.viewrss-category { width: 250px; margin-top: 5px; }
+.viewrss-category h5 { margin: 0; }
+
+.news-subtitle { font-size: .8em; color: #1D5987; border-bottom: 1px dotted #79B7E7; margin-top: 3px; }
+
+.news-content .date { font-size: .7em; color: #1D5987; border-bottom: 1px dotted #79B7E7; }
+.news-content .date span { margin-left:5px; }
+
+.viewrss-view-news { width: auto; vertical-align:top; padding: 0px 10px; }
+
+.view-news { margin-bottom: 10px; }
+.view-news h4 { border-bottom: 1px dotted #A6C9E2; padding: 5px 0px; color: #1D5987; font-size: 1.1em; margin: 5px 4px; background-color: #FAFCFE; }
+.view-news nav.icons { float: right; display: inline-block; cursor: pointer; margin: 5px; }
+.view-news nav.icons span { cursor:pointer; display:inline-block; }
+.view-news select { padding: 3px 3px; border: 1px solid #79B7E7; color: #1D5987; font-size: .75em; }
+.view-news iframe { border: thin solid #79B7E7; margin: 4px 0px; padding: 5px; }
+.view-news .view-news-detail {  border-bottom: 1px dotted #A6C9E2; }
+.view-news .date { margin-left: 5px; font-size: .7em; color: #1D5987; margin-top: 3px;  }
+.view-news .date span { margin-left:10px; }
+
+
+/*
+ * Menus
+ ******************/
+.tip-menu { padding: 5px; list-style-type: none; }
+.tip-menu img { float: right; }
+.tip-menu-item, .tip-menu-item a { padding: 3px 0px; background-color: #FAFCFE; text-decoration: none; color: #1D5987; cursor: pointer; }
+.tip-menu-item:hover, .tip-menu-item a:hover { background-color: #FAFCFE; font-weight: bold;  border-bottom: 1px dotted #79B7E7;  border-top: 1px dotted #79B7E7; }
+
+
+/*
+ * Scrubber
+ ******************************************************/
+.tdpsi-scrubber { font-size: .8em; }
+.scrubber-error { background-color: #ffe8e8; }
+.scrubber-warning { background-color: #ffffe2; }
+.scrubber-debug { background-color: #f2f2f2; }
+.tdpsi-scrubber .content-scrubber { margin-top: 1px; padding: 3px; padding-left: 20px; text-indent: -20px; }
+.tdpsi-scrubber .ui-dialog-content { font-size: .8em; }

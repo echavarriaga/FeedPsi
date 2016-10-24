@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SetOfNews name="RSS Sports Psi Style">
+  <RSS id="as" title="Spain: AS" image="images/rss/as.png" url="http://as.com/rss/tags/ultimas_noticias.xml"/>
+  <RSS id="lagazzetta" title="Italy: La Gazzetta" image="images/rss/lagazzetta.png" url="http://www.gazzetta.it/rss/home.xml"/>
+  <RSS id="lequipe" title="France: L'Equipe" image="images/rss/lequipe.png" url="http://www.lequipe.fr/rss/actu_rss.xml"/>
+  <RSS id="nytimes" title="EEUU: The NY Times" image="images/rss/nytimes.png" url="http://feeds1.nytimes.com/nyt/rss/Sports?format=xml"/>
+  <RSS id="eltiempo" title="Colombia: El Tiempo" image="images/rss/eltiempo.png" url="http://www.eltiempo.com/deportes/rss.xml"/>
+  <MainNews title="Latest Sports News"></MainNews>
+  <Category id="football" title="Football"/>
+  <Category id="cycling" title="Cycling"/>
+  <Category id="tennis" title="Tennis"/>
+  <Category id="motor" title="Motor"/>
+</SetOfNews>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SetOfNews name="RSS Sports Psi Style">
+  <RSS id="as" title="Germany: Bild Sport" image="images/rss/bild.png" url="http://rss.bild.de/bild-sport.xml"/>
+  <RSS id="theguardian" title="England: The Guardian" image="images/rss/mirrorsport.png" url="http://feeds.theguardian.com/theguardian/uk/sport/rss"/>
+  <RSS id="as" title="Spain: AS" image="images/rss/as.png" url="http://as.com/rss/tags/ultimas_noticias.xml"/>
+  <RSS id="lagazzetta" title="Italy: La Gazzetta" image="images/rss/lagazzetta.png" url="http://www.gazzetta.it/rss/home.xml"/>
+  <RSS id="eltiempo" title="Colombia: El Tiempo" image="images/rss/eltiempo.png" url="http://www.eltiempo.com/deportes/rss.xml"/>
+  <MainNews title="Latest Sports News"></MainNews>
+  <Category id="international" title="International"/>
+  <Category id="technology" title="Technology"/>
+  <Category id="economy" title="Economy"/>
+</SetOfNews>

@@ -1,0 +1,199 @@
+﻿<style>
+  .description { min-width: 800px; max-width: 1000px; text-align: left; display:inline-block; }
+  .description > header { padding: 0 5em; }
+  .description h1 { font-size: 1.2em; border-bottom: 1px solid #f0f0f0; }
+  .description h2 { font-size: 1.1em; padding: .2em .4em; background-color: #fafafa; }
+  .description table.commands { width: 100%; }
+  .description th { border-bottom: 1px solid #f0f0f0; color: gray; }
+  .description .command { font-weight: bold; vertical-align: top; white-space: nowrap; }
+  
+  
+  .description .content { font-size: 14px; padding: 0 20px 0 0; }
+  .description .content h1 { font-size: 1.3em; padding: .4em 0; border-bottom: 1px solid #f0f0f0; text-align:center; }
+  .description .content h2 { font-size: 1.1em; padding: .2em 0; background-color: #fafafa; }
+  .description .content figcaption { font-size: 0.9em; text-align: center; }
+  .description .content .dgl { text-align: center; }
+  .description .index { width: 150px; vertical-align: top; border-left: 1px solid #f0f0f0; padding-left: 10px;}
+  
+  .text-description { }
+  .table-content {-webkit-padding-start: 20px;}
+</style>
+
+<main class="description">
+  <table cellpadding="5" style="width:100%">
+    <tr>
+      <td class="content">
+        <h1>FeedPsi Language Description</h1>
+        <p>
+          The FeedPsi web application aims to illustrate the use of <i>PsiXML Interpreter</i> and 
+          <a href="/model"><b>PsiXML Evaluation Engine</b> </a>. Briefly, it is web
+          application implemented with the goal of creating and deploying a dynamic web page by aggregating content
+          from several web sources in order to build a News Portal. These sources are formatted in RSS, written in XML Language.
+        </p>
+        <p>
+          Along this section, we will expose the complete cycle from problem analysis to implementation by using the
+          <i>PsiXML Interpreter</i>. Thus, we will detail how to build the <b>FeedPsi Language</b> and encapsulate it in a 
+          <i>Psi Component</i>, and then, we will expose how the Psi Program is evaluated and how the dynamic website is 
+          generated as a result.
+        </p>
+        <section id="fd-design">
+          <h2>1. Analysis and design</h2>
+          <p>
+            In Figure 1 we can see the design of the <b>FeedPsi</b> web application. It manages RSS feeds,
+            allowing us to choose, display, store by category and/or dispose news. In addition,
+            the figure shows the <b>FeedPsi Language</b>, which is implemented in Feed Component and evaluated
+            on the <a href="/model">Interpreter PsiXML</a> shown. <b>FeedPsi</b> will need to manage the list of RSS feeds (RSS multiple tags),
+            the list of categories (multiple Category tags) and the list of current news selected by the user
+            (one MainNews tag). When a RSS feed is read, the headlines are available in a
+            floating submenu (see Figure 1). Once labelled, news can be displayed and/or
+            stored in any of its categories for later reading.
+          </p>
+          <p>
+            The proposed web application does not require server-side programming, being possible
+            to make the entire application deployment on the web client, with minimal computational cost
+            on the server.
+          </p>
+          <figure>
+            <img src="images/Figure1.png" class="figure1" width="700" alt="Design of a web application">
+            <figcaption>Figure 1. Design of a web application to aggregate news via RSS feeds, through the creation of a <b>Psi Language</b>.</figcaption>
+          </figure> 
+
+        </section>
+
+
+        <section id="fd-grammar">
+          <h2>2. FeedPsi Grammar</h2>
+          <p>
+            Figure 2 shows shows the language structure diagram and Table 1 shows the grammar validator attibutes of the 
+            <b>FeedPsi Language</b>. The <b>SetOfNews</b> tag is the element root in the FeedPsi Program evaluation. It 
+            contains the list of RSS sources (<b>RSS</b> tag), the list of Categories (<b>Category</b> tag) and the 
+            currently new shown (<b>MainNews</b> tag).
+          </p>
+          <figure>
+            <div id="grammar-diagram" class="dgl">
+              <img src="../images/loading.gif" alt="Loading ..." /> <b>Loading diagram ...</b>
+            </div>
+            <script type="text/javascript">
+              $(function () {
+                setTimeout(function () {
+                  $("#grammar-diagram")
+                    .empty()
+                    .visorPsi({
+                      acronym: "feed",
+                      url: "/PsiXML/source/models/diagram/feedpsi/grammar.dgl.xml"
+                    });
+                }, 500);  
+              });
+            </script>
+            <figcaption>Figure 2. Language structure diagram of the <b>FeedPsi Grammar</b>.</figcaption>
+          </figure>
+          <p>
+            The <b>RSS</b> tag has an identifier, a name and the URL for the RSS source. It has the capability to
+            connect via AJAX to fetch the data from the RSS news service. The <b>Category</b> tag has list news stored
+            by category. It has an identifier and the category title. The <b>MainNews</b> tag contains list of news
+            currently displayed to the user. Finally, the <b>News</b> tag contains the news obtained from the RSS feed,
+            which has an unique identifier and it is displayed if it is under the <b>MainNews</b> tag.
+          </p>
+          <div id="grammar-table" class="grammar-table">
+            <img src="../images/loading.gif" alt="Loading ..." /> <b>Loading table ...</b>
+          </div>
+          <script type="text/javascript">
+            $(function () {
+              setTimeout(function () {
+                var params = { componentId: "feed_psi", caption: "Tabla 1. Psi Grammar Validator Attributes of the FeedPsi Language" },
+                    content = DocsPsi.transform("feed", { alias: "psi-grammar", params: params });
+                $("#grammar-table").empty().append(content);
+              }, 600);
+            });
+          </script>
+        </section>
+
+
+        <section id="fd-diagram">
+          <h2>3. Classes diagram for the Feed Component</h2>
+          <p>
+            Figure 3 shows the class diagram for the Feed Component. In the diagram we can see the functionality
+            associated to the set of news (<i>SetOfNews</i> class) where we can add and remove both RSS feeds and
+            categories. Each RSS source (<i>RSS</i> class) has the ability to update their content making an AJAX
+            call by using the associated URL, create a news entry, and create a sub-cathegory of headlines with
+            the help of the <i>SetOfNews</i> class.
+          </p>
+          <p>
+            In addition, categories (<i>Category</i> class) and current displayed news (<i>MainNews</i> class) can
+            be managed (add, delete or verify) by using the <i>PanelNews</i> class. The MainNews class has been
+            implemented to visualize that news chosen from the RSS sources or from the different categories. Meanwhile,
+            the News class defines news with a unique id and it is in charge of drawing the news. The <i>UserInterface</i>
+            will be in charge of process and draw the interface for the FeedPsi web application.
+          </p>
+          <figure>
+            <div id="class-diagram-basic" class="dgl">
+              <img src="../images/loading.gif" alt="Loading ..." /> <b>Loading diagram ...</b>
+            </div>
+            <script type="text/javascript">
+              $(function () {
+                setTimeout(function () {
+                  $("#class-diagram-basic")
+                    .empty()
+                    .visorPsi({
+                      acronym: "feed",
+                      url: "/PsiXML/source/models/diagram/feedpsi/basic.dgl.xml"
+                    });
+                }, 700);
+              });
+            </script>
+            <figcaption>Figure 3. Classes diagram of the <b>Feed Component</b>.</figcaption>
+          </figure>
+        </section>
+
+        <section id="fd-running">
+          <h2>4. Running the FeedPsi web application</h2>
+          <p>
+            In order to show how the <b>Feed Component</b> runs together with the FeedPsi Language to implement the
+            <a href="/feedpsi"><b>FeedPsi Web Application</b></a>, we will show how it Works with the RSS source for the next journals: Bild,
+            Mirror, AS, La Gazzeta, L’Equipe y El Tiempo.
+          </p>
+          <p>
+            Thus, XML document shows the FeedPsi source code that implements the FeedPsi Web Application (the news 
+            aggregator). In order to create the web application, the Psi Interpreter uses jQuery User Interface , 
+            a visual component JavaScript library.
+          </p>
+          <p id="program-sample-p">
+            <textarea id="program-sample" class="psi-xml-editor"></textarea>
+            <script type="text/javascript">
+              $(function () {
+                setTimeout(function () {
+                  var program = PsiXML.loadXMLSync("source/sports.xml"),
+                      length = $("#program-sample-p").width(),
+                      editor = CodeMirror.fromTextArea($("#program-sample").get(0), { mode: "text/html", lineNumbers: true, readOnly: true }),
+                      text = (new XMLSerializer()).serializeToString(program);
+                  editor.setValue(text);
+                  $("#program-sample").siblings(".CodeMirror").css("width", length + "px");
+                }, 800);
+              });
+            </script>
+          </p>
+        </section>
+      </td>
+
+
+
+      <td class="index">
+        <h1>Table of contents</h1>
+        <ol class="table-content">
+          <li><a href="#fd-design">Analysis and design</a></li>
+          <li><a href="#fd-grammar">FeedPsi Grammar for FeedPsi Language</a></li>
+          <li><a href="#fd-diagram">Classes diagram for the Feed Component</a></li>
+          <li><a href="#fd-running">Running the FeedPsi web application</a></li>
+        </ol>
+        <h1>Examples</h1>
+        <ul type="circle">
+          <li><a href="#fd-design">Analysis and design</a></li>
+          <li><a href="#fd-grammar">FeedPsi Grammar for FeedPsi Language</a></li>
+          <li><a href="#fd-diagram">Classes diagram for the Feed Component</a></li>
+          <li><a href="#fd-running">Running the FeedPsi web application</a></li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+</main>
+

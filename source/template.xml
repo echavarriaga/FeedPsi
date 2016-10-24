@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Template>
+
+
+<Fragment id="set-of-news">
+<Interface><![CDATA[
+  <header class="viewrss-header">
+    <nav><a href="/feedpsi/api" style="float: right; padding-top: 40px; margin-right: 10px; font-size: .8em; color: #2e6e9e;">API Documentation</a></nav>
+    <div id="title-header" style="padding-left: 400px;padding-top: 30px;color: #1d5987;font-weight: bold;font-size: 1.5em;"></div>
+  </header>
+  
+  <section class="viewrss-main">
+    <table style="width:100%">
+      <tr>
+        <td class="viewrss-menu">
+          <div class="ui-widget-header ui-corner-all viewrss-menu-title">Sources RSS</div>
+          <ul id="viewrss-menu-items" class="viewrss-menu-items ui-helper-reset ui-helper-clearfix">
+          </ul>
+        </td>
+        <td class="viewrss-view-news"></td>
+        <td class="viewrss-categories">
+          <div class="ui-widget-header ui-corner-all viewrss-menu-title">Sections</div> 
+          <ul id="categories-menu-items" class="ui-helper-reset">
+          </ul>
+        </td>
+      </tr>
+    </table> 
+  </section>
+  
+  <footer class="viewrss-footer"></footer>
+]]></Interface>
+<Script arguments="interface, psi"><![CDATA[
+  $(".viewrss-menu-title span.extend", interface).click(function(){
+    $(this).toggleClass('ui-icon-circle-triangle-e').toggleClass('ui-icon-circle-triangle-w'); 
+    $(".viewrss-categories").toggle();
+  });
+  $("#title-header").text(psi.attr("name"));
+  console.log(psi);
+]]></Script>
+</Fragment>
+
+
+<Fragment id="submenu-items">
+<Interface><![CDATA[
+  <ul class='submenu'></ul>
+]]></Interface>
+<Script arguments="interface, psi"><![CDATA[
+  //Crear submenú
+  for(var i in psi.feed.entries){
+    var entry = psi.feed.entries[i];
+    $('<li class="menu-item"></li>')
+      .text(entry.title)
+      .attr("id", psi.program.getUID(this.tag))
+      .appendTo(interface)
+      .click(function(){
+        this.rss.createNews($(this).attr("id"), this.entry);
+        this.rss.root.submenu("hide");
+      })
+      .each(function(){ 
+        this.rss = psi; 
+        this.entry = entry;
+      });
+  }
+]]></Script>
+</Fragment>
+
+
+
+<Fragment id="menu-rss">
+<Interface><![CDATA[
+  <li class="ui-widget-content ui-corner-tr item-rss">
+    <div class="ui-state-hover ui-corner-all header"> 
+      <span class="ui-icon ui-icon-plusthick toggle" style="float: right;"></span>
+      <h5 />
+    </div>
+    <div class="news-subtitle">
+      <img class="subtitle" src="" width="50" alt="Last news ..."/> 
+      <span class="date"></span>
+    </div>
+    <div class="content" style="display: none;">
+      <img class="logo" src="images/wait.png" />
+    </div>
+  </li>
+]]></Interface>
+<Script arguments="interface, psi"><![CDATA[
+  //Manejo de título
+  $("h5", interface).text( psi.attr("title") );
+  //Manejo de imagen
+  psi.image = $("img.subtitle", interface);
+  psi.date = $("span.date", interface); 
+  psi.content = $("div.content", interface);
+  $(".toggle, .news-subtitle", interface).click(function () {
+    var icon = $(this);
+    $(".item-rss .content").hide();
+    $(".item-rss .header span").removeClass("ui-icon-minusthick").addClass("ui-icon-plusthick");
+    icon.toggleClass("ui-icon-minusthick ui-icon-plusthick");
+    icon.closest(".item-rss").find(".content").show();
+  });
+]]></Script>
+</Fragment>
+
+
+<Fragment id="main-news">
+<Interface><![CDATA[
+  <div>
+    <div class="ui-state-default ui-corner-all viewrss-menu-title">
+      <span class="ui-icon ui-icon-circle-triangle-e" onclick="$(this).toggleClass('ui-icon-circle-triangle-e').toggleClass('ui-icon-circle-triangle-w'); $('.viewrss-categories').toggle();"></span>
+      <b class="title"></b>
+    </div>
+    <section id="view-news-content" class="viewrss-content-view-news"></section>
+  </div>
+]]></Interface>
+<Script arguments="interface, psi"><![CDATA[
+  $("b.title", interface).text( psi.attr("title") );
+  //Crear content
+  psi.content = $("#view-news-content", interface);
+]]></Script>
+</Fragment>
+
+
+
+<Fragment id="category">
+<Interface><![CDATA[
+  <li type="category" class="viewrss-category">
+    <h5 class="viewrss-category-title ui-state-hover ui-corner-all">
+      <span class="ui-icon ui-icon-close remove"></span>
+      <span class="ui-icon ui-icon-minus minimum"></span>
+      <i class="text"></i>
+    </h5>
+    <div class="news-content"></div>
+  </li>
+]]></Interface>
+<Script arguments="interface, psi"><![CDATA[
+  //Remover categoría
+  $(">h5 span.remove", interface).click(function(){
+    $(this).parents("[type=category]").remove();
+  });
+  //Minimizar/Expandir categoría
+  $(">h5 span.minimum", interface).click(function(){
+    $(this).toggleClass("ui-icon-minus").toggleClass("ui-icon-plus"); 
+    $(this).parents("[type=category]").find("div.news-content").toggle();
+  });
+  //Crear content
+  psi.content = $("div.news-content", interface);
+  $("i.text", interface).text( psi.attr("title") );
+]]></Script>
+</Fragment>
+
+
+<Fragment id="news-complete">
+<Interface><![CDATA[
+  <div type="view" class="view-news">
+    <nav class="icons">
+      <span class="ui-icon ui-icon-closethick remove"></span>
+      <span class="ui-icon ui-icon-minusthick minimum" onclick=""></span>
+    </nav>
+    <h4></h4>
+    <div class="date"><img src="" width="50"/><span></span></div>
+    <div class="view-news-detail">
+      <p class="content"></p>
+      <button class="view ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button" aria-disabled="false" style="font-size: 0.7em;"><span class="ui-button-icon-primary ui-icon ui-icon-search"></span><span class="ui-button-text">Show ...</span></button>
+      <button class="hide ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button" aria-disabled="false" style="font-size: 0.7em;"><span class="ui-button-icon-primary ui-icon ui-icon-cancel"></span><span class="ui-button-text">Hide ...</span></button>
+      <select class="categories ui-corner-all">
+        <option value="none">Send to section ...</option>
+      </select>
+      <iframe style="display:none; height:500px; width:100%;" class="ui-corner-all">Ver...</iframe>
+    </div>
+  </div>
+]]></Interface>
+<Script arguments="interface, psi"><![CDATA[
+  //Remover noticia principal
+  $(">nav span.remove", interface).click(function(){
+    $(this).parents("[type=view]").remove();
+  });
+  //Minimizar/Expandir noticia principal
+  $(">nav span.minimum", interface).click(function(){
+    $(this).toggleClass("ui-icon-minusthick").toggleClass("ui-icon-plusthick"); 
+    $(this).parents("[type=view]").find(".view-news-detail").toggle();
+  });
+  //Actualizar campos
+  interface.find("h4").text( psi.attr("title") );
+  interface.find("p.content").append( psi.attr("content") );
+  interface.find("button.view").click(function(){
+    var iframe = $("iframe", $(this).parents(".view-news:first"));
+    iframe.show();
+    if (!iframe.attr("src"))
+      iframe.attr("src", this.news.attr("link"));
+    })
+    .each(function(){ this.news = psi; });
+  
+  //Fecha e imagen
+  interface.find("div.date span").text( psi.attr("published") );
+  if (psi.rss)
+    interface.find("div.date img").attr("src", psi.rss.attr("image"));
+  else
+    interface.find("div.date img").remove();
+    
+  //Programar elementos auxiliares
+  interface.find("button.hide").click(function(){
+    $("iframe", $(this).parents(".view-news:first")).hide();
+  });
+  var select = interface.find("select.categories");
+  for (var id in psi.root.categories){
+    var category = psi.root.categories[id];
+    $("<option></option>")
+      .attr("value", category.id())
+      .text(category.attr("title"))
+      .appendTo(select);
+  }
+  select
+    .change(function(){ 
+      var category = this.news.root.categories[this.value];
+      if (category)
+        this.news.change(category); 
+    })
+    .each(function(){ this.news = psi; });
+]]></Script>
+</Fragment>
+
+
+<Fragment id="news-titular">
+<Interface><![CDATA[
+  <div class="tip-menu-item">
+    <a href="#"></a>
+    <div class="date"><img src="" width="50"/><span></span></div>
+  </div>
+]]></Interface>
+<Script arguments="interface, psi"><![CDATA[
+  //Actualizar campos
+  interface.find("a")
+    .text( psi.attr("title") )
+    .click(function(){
+      this.news.change(this.news.root.mainNews);
+    })
+    .each(function(){ this.news = psi; });
+  
+  //Fecha e imagen
+  interface.find("div.date span").text( psi.attr("published") );
+  if (psi.rss)
+    interface.find("div.date img").attr("src", psi.rss.attr("image"));
+  else
+    interface.find("div.date img").remove();
+]]></Script>
+</Fragment>
+
+</Template>

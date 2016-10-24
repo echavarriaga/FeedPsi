@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SetOfNews name="ültimas noticias en España">
+  <RSS id="abc" title="Spain: ABC" image="images/rss/abc.gif" url="http://www.abc.es/rss/feeds/abcPortada.xml"/>
+  <RSS id="elpais" title="Spain: El País" image="images/rss/elpais.png" url="http://ep00.epimg.net/rss/tags/ultimas_noticias.xml"/>
+  <RSS id="elmundo" title="Spain: El Menudo" image="images/rss/elmundo.png" url="http://estaticos.elmundo.es/elmundo/rss/portada.xml"/>
+  <MainNews title="ULTIMAS NOTICIAS"></MainNews>
+  <Category id="international" title="International"/>
+  <Category id="technology" title="Technology"/>
+  <Category id="economy" title="Economy"/>
+</SetOfNews>
